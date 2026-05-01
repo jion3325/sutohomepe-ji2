@@ -175,6 +175,7 @@
     display: flex;
     align-items: center;
     gap: 1rem;
+    text-decoration: none;
   }
   .hero-tag::before {
     content: '';
@@ -576,6 +577,15 @@
     border: 0.5px solid var(--border);
     background: var(--bg2);
     position: relative;
+    text-decoration: none;
+    display: block;
+    color: inherit;
+    transition: border-color 0.3s, transform 0.3s;
+  }
+
+  .rule-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-5px);
   }
 
   .rule-card::after {
@@ -692,26 +702,25 @@
 <div class="cursor" id="cursor"></div>
 <div class="cursor-ring" id="cursorRing"></div>
 
-<!-- Nav -->
 <nav>
   <a href="#" class="nav-logo">すとSV</a>
   <ul class="nav-links">
     <li><a href="#servers">サーバー</a></li>
     <li><a href="#features">特徴</a></li>
-    <li><a href="#ip">接続</a></li>
+    <li><a href="status.html">ステータス</a></li>
     <li><a href="#rules">ルール</a></li>
   </ul>
   <a href="#ip" class="nav-cta">今すぐ参加</a>
 </nav>
 
-<!-- Hero -->
 <section class="hero">
   <div class="hero-grid"></div>
   <div class="hero-scan"></div>
   <div class="hero-glow"></div>
   <div class="hero-glow2"></div>
 
-  <div class="hero-tag"><span class="status-dot"></span>サーバー稼働中 — sutoserver.net</div>
+  <a href="status.html" class="hero-tag"><span class="status-dot"></span>サーバー稼働中 — 詳細を確認</a>
+  
   <h1 class="hero-title">
     <span class="line1">すと</span>
     <span class="line2">サーバー</span>
@@ -725,7 +734,6 @@
   <div class="hero-scroll">Scroll</div>
 </section>
 
-<!-- Stats -->
 <div class="stats-bar fade-in">
   <div class="stat-item">
     <span class="stat-num">4</span>
@@ -748,7 +756,6 @@
   </div>
 </div>
 
-<!-- Servers Section -->
 <section class="section" id="servers">
   <div class="section-label">Servers</div>
   <h2 class="section-title fade-in">4つの<br>プレイ環境</h2>
@@ -807,7 +814,6 @@
   </div>
 </section>
 
-<!-- Features -->
 <section class="features-section" id="features">
   <div class="features-layout">
     <div class="features-left fade-in">
@@ -855,7 +861,6 @@
   </div>
 </section>
 
-<!-- IP Section -->
 <section class="ip-section" id="ip">
   <div class="section-label" style="justify-content:center;">Join Now</div>
   <h2 class="section-title fade-in" style="margin:0 auto 0; text-align:center; max-width:100%;">今すぐ参加しよう</h2>
@@ -869,7 +874,6 @@
   </div>
 </section>
 
-<!-- Rules -->
 <section class="rules-section" id="rules">
   <div class="section-label">Rules</div>
   <h2 class="section-title fade-in">ルール</h2>
@@ -885,25 +889,23 @@
       <div class="rule-title">誹謗中傷の禁止</div>
       <div class="rule-desc">他プレイヤーへの暴言・差別的発言は禁止。健全なコミュニティのためリスペクトを忘れずに。</div>
     </div>
-    <div class="rule-card fade-in" data-num="R-03">
+    <a href="rules_detail.html" class="rule-card fade-in" data-num="R-03">
       <div class="rule-icon">⚙️</div>
       <div class="rule-title">サーバー別ルール</div>
-      <div class="rule-desc">各サーバーには固有のルールがあります。参加前に必ず各サーバーのルールを確認してください。</div>
-    </div>
+      <div class="rule-desc">各サーバーには固有のルールがあります。詳細はこちらから確認してください。</div>
+    </a>
   </div>
 </section>
 
-<!-- Footer -->
 <footer>
   <div class="footer-logo">すとSV</div>
   <ul class="footer-links">
     <li><a href="#">ホーム</a></li>
-    <li><a href="#servers">サーバー</a></li>
-    <li><a href="#">ニュース</a></li>
+    <li><a href="status.html">ステータス</a></li>
+    <li><a href="rules_detail.html">詳細ルール</a></li>
     <li><a href="#">運営募集</a></li>
-    <li><a href="#rules">ルール</a></li>
   </ul>
-  <div class="footer-copy">© 2025 すとサーバー. All rights reserved.</div>
+  <div class="footer-copy">© 2026 すとサーバー. All rights reserved.</div>
 </footer>
 
 <script>
@@ -961,10 +963,12 @@
 
   document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 
-  // Smooth scroll for anchors
+  // Smooth scroll for anchors (ページ内リンクのみに適用されるよう調整)
   document.querySelectorAll('a[href^="#"]').forEach(a => {
     a.addEventListener('click', e => {
-      const target = document.querySelector(a.getAttribute('href'));
+      const href = a.getAttribute('href');
+      if (href === "#") return;
+      const target = document.querySelector(href);
       if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth' }); }
     });
   });
