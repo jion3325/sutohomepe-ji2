@@ -1,0 +1,973 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>すとサーバー — Minecraft マルチサーバー</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #080c10;
+    --bg2: #0d1117;
+    --bg3: #111820;
+    --accent: #00e5ff;
+    --accent2: #ff6b35;
+    --accent3: #a855f7;
+    --text: #e8edf2;
+    --text2: #7a8899;
+    --border: rgba(0,229,255,0.12);
+    --border2: rgba(0,229,255,0.25);
+    --font-jp: 'Noto Sans JP', sans-serif;
+    --font-mono: 'Space Mono', monospace;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-jp);
+    font-weight: 300;
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* Custom cursor */
+  .cursor {
+    position: fixed;
+    width: 8px; height: 8px;
+    background: var(--accent);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transition: transform 0.1s;
+    mix-blend-mode: screen;
+  }
+  .cursor-ring {
+    position: fixed;
+    width: 32px; height: 32px;
+    border: 1px solid rgba(0,229,255,0.5);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9998;
+    transition: transform 0.15s, width 0.2s, height 0.2s, opacity 0.2s;
+  }
+
+  /* Nav */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.2rem 3rem;
+    background: rgba(8,12,16,0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 0.5px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: var(--font-mono);
+    font-size: 1rem;
+    color: var(--accent);
+    letter-spacing: 0.15em;
+    text-decoration: none;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    color: var(--text2);
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--accent); }
+
+  .nav-cta {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+    border: 0.5px solid var(--accent);
+    padding: 0.5rem 1.2rem;
+    text-decoration: none;
+    transition: background 0.2s, color 0.2s;
+    text-transform: uppercase;
+  }
+  .nav-cta:hover { background: var(--accent); color: var(--bg); }
+
+  /* Hero */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 0 3rem 5rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,229,255,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,229,255,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+    animation: gridShift 20s linear infinite;
+  }
+
+  @keyframes gridShift {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(60px); }
+  }
+
+  .hero-scan {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(transparent 40%, rgba(0,229,255,0.015) 50%, transparent 60%);
+    animation: scan 6s ease-in-out infinite;
+  }
+  @keyframes scan {
+    0%, 100% { transform: translateY(-20%); }
+    50% { transform: translateY(20%); }
+  }
+
+  .hero-glow {
+    position: absolute;
+    width: 600px; height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(0,229,255,0.06) 0%, transparent 70%);
+    top: -100px; right: -100px;
+    pointer-events: none;
+  }
+
+  .hero-glow2 {
+    position: absolute;
+    width: 400px; height: 400px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(168,85,247,0.06) 0%, transparent 70%);
+    bottom: 0; left: 200px;
+    pointer-events: none;
+  }
+
+  .hero-tag {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.25em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .hero-tag::before {
+    content: '';
+    display: inline-block;
+    width: 40px; height: 0.5px;
+    background: var(--accent);
+  }
+
+  .hero-title {
+    font-size: clamp(4rem, 10vw, 9rem);
+    font-weight: 900;
+    line-height: 0.9;
+    letter-spacing: -0.03em;
+    position: relative;
+    margin-bottom: 2rem;
+  }
+
+  .hero-title .line1 { color: var(--text); display: block; }
+  .hero-title .line2 {
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(0,229,255,0.4);
+    display: block;
+  }
+
+  .hero-sub {
+    font-size: 0.95rem;
+    color: var(--text2);
+    font-weight: 300;
+    max-width: 480px;
+    line-height: 1.8;
+    margin-bottom: 3rem;
+    position: relative;
+  }
+
+  .hero-actions {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    position: relative;
+  }
+
+  .btn-primary {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    color: var(--bg);
+    background: var(--accent);
+    padding: 1rem 2.5rem;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: opacity 0.2s, transform 0.2s;
+    display: inline-block;
+  }
+  .btn-primary:hover { opacity: 0.85; transform: translateY(-2px); }
+
+  .ip-box {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--text2);
+    letter-spacing: 0.05em;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+  .ip-box span { color: var(--accent); }
+
+  .hero-scroll {
+    position: absolute;
+    right: 3rem;
+    bottom: 5rem;
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.3em;
+    color: var(--text2);
+    text-transform: uppercase;
+    writing-mode: vertical-rl;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .hero-scroll::after {
+    content: '';
+    display: block;
+    width: 0.5px;
+    height: 60px;
+    background: linear-gradient(var(--text2), transparent);
+    animation: scrollLine 1.5s ease-in-out infinite;
+  }
+  @keyframes scrollLine {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 1; }
+  }
+
+  /* Stats bar */
+  .stats-bar {
+    background: var(--bg3);
+    border-top: 0.5px solid var(--border);
+    border-bottom: 0.5px solid var(--border);
+    padding: 1.5rem 3rem;
+    display: flex;
+    align-items: center;
+    gap: 4rem;
+    overflow: hidden;
+  }
+
+  .stat-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    flex-shrink: 0;
+  }
+  .stat-num {
+    font-family: var(--font-mono);
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--accent);
+  }
+  .stat-label {
+    font-size: 0.68rem;
+    letter-spacing: 0.15em;
+    color: var(--text2);
+    text-transform: uppercase;
+  }
+  .stat-divider {
+    width: 0.5px;
+    height: 40px;
+    background: var(--border);
+    flex-shrink: 0;
+  }
+
+  /* Servers Section */
+  .section {
+    padding: 8rem 3rem;
+  }
+
+  .section-label {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .section-label::before {
+    content: '';
+    display: inline-block;
+    width: 20px; height: 0.5px;
+    background: var(--accent);
+  }
+
+  .section-title {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 900;
+    letter-spacing: -0.02em;
+    line-height: 1;
+    margin-bottom: 5rem;
+    max-width: 600px;
+  }
+
+  .servers-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 0.5px solid var(--border);
+  }
+
+  .server-card {
+    background: var(--bg2);
+    padding: 3rem;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.3s;
+    cursor: none;
+  }
+  .server-card:hover { background: var(--bg3); }
+
+  .server-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px;
+    height: 0;
+    background: var(--card-accent, var(--accent));
+    transition: height 0.4s cubic-bezier(0.4,0,0.2,1);
+  }
+  .server-card:hover::before { height: 100%; }
+
+  .server-card.accent1 { --card-accent: #00e5ff; }
+  .server-card.accent2 { --card-accent: #ff6b35; }
+  .server-card.accent3 { --card-accent: #a855f7; }
+  .server-card.accent4 { --card-accent: #22c55e; }
+
+  .card-num {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    color: var(--text2);
+    margin-bottom: 2rem;
+  }
+
+  .card-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+    display: block;
+    line-height: 1;
+  }
+
+  .card-title {
+    font-size: 1.6rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 1rem;
+    color: var(--text);
+  }
+
+  .card-desc {
+    font-size: 0.88rem;
+    color: var(--text2);
+    line-height: 1.8;
+    margin-bottom: 2rem;
+  }
+
+  .card-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .tag {
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.1em;
+    color: var(--card-accent, var(--accent));
+    border: 0.5px solid var(--card-accent, var(--accent));
+    padding: 0.3rem 0.7rem;
+    text-transform: uppercase;
+    opacity: 0.7;
+  }
+
+  /* Features */
+  .features-section {
+    padding: 8rem 3rem;
+    background: var(--bg3);
+    border-top: 0.5px solid var(--border);
+    border-bottom: 0.5px solid var(--border);
+  }
+
+  .features-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6rem;
+    align-items: start;
+  }
+
+  .features-left .big-text {
+    font-size: clamp(3rem, 6vw, 5rem);
+    font-weight: 900;
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    margin-bottom: 2rem;
+  }
+
+  .features-left p {
+    font-size: 0.9rem;
+    color: var(--text2);
+    line-height: 1.9;
+    max-width: 380px;
+  }
+
+  .features-right {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .feature-item {
+    padding: 2rem 0;
+    border-bottom: 0.5px solid var(--border);
+    display: flex;
+    gap: 2rem;
+    align-items: flex-start;
+    transition: padding-left 0.3s;
+  }
+  .feature-item:hover { padding-left: 1rem; }
+  .feature-item:first-child { border-top: 0.5px solid var(--border); }
+
+  .feature-num {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    color: var(--accent);
+    min-width: 30px;
+    margin-top: 0.15rem;
+  }
+
+  .feature-content h3 {
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.01em;
+  }
+
+  .feature-content p {
+    font-size: 0.82rem;
+    color: var(--text2);
+    line-height: 1.7;
+  }
+
+  /* IP Section */
+  .ip-section {
+    padding: 8rem 3rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .ip-section::before {
+    content: '';
+    position: absolute;
+    width: 800px; height: 400px;
+    background: radial-gradient(ellipse, rgba(0,229,255,0.05) 0%, transparent 70%);
+    left: 50%; top: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+  }
+
+  .ip-display {
+    font-family: var(--font-mono);
+    font-size: clamp(1.5rem, 5vw, 3.5rem);
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: 0.05em;
+    border: 0.5px solid var(--border2);
+    display: inline-block;
+    padding: 2rem 4rem;
+    position: relative;
+    cursor: pointer;
+    transition: background 0.2s;
+    margin: 3rem 0;
+  }
+  .ip-display:hover { background: rgba(0,229,255,0.05); }
+
+  .ip-display::before, .ip-display::after {
+    content: '';
+    position: absolute;
+    width: 12px; height: 12px;
+    border-color: var(--accent);
+    border-style: solid;
+  }
+  .ip-display::before {
+    top: -1px; left: -1px;
+    border-width: 1px 0 0 1px;
+  }
+  .ip-display::after {
+    bottom: -1px; right: -1px;
+    border-width: 0 1px 1px 0;
+  }
+
+  .copy-hint {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    color: var(--text2);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+
+  .ip-copied {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    color: var(--accent);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    opacity: 0;
+    transition: opacity 0.3s;
+    display: block;
+    margin-top: 0.5rem;
+  }
+  .ip-copied.show { opacity: 1; }
+
+  /* Rules Section */
+  .rules-section {
+    padding: 6rem 3rem;
+    background: var(--bg3);
+    border-top: 0.5px solid var(--border);
+  }
+
+  .rules-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    margin-top: 4rem;
+  }
+
+  .rule-card {
+    padding: 2rem;
+    border: 0.5px solid var(--border);
+    background: var(--bg2);
+    position: relative;
+  }
+
+  .rule-card::after {
+    content: attr(data-num);
+    position: absolute;
+    top: 1.5rem; right: 1.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    color: var(--border2);
+    letter-spacing: 0.1em;
+  }
+
+  .rule-icon { font-size: 1.5rem; margin-bottom: 1rem; }
+
+  .rule-title {
+    font-size: 0.9rem;
+    font-weight: 700;
+    margin-bottom: 0.6rem;
+    color: var(--text);
+  }
+
+  .rule-desc {
+    font-size: 0.78rem;
+    color: var(--text2);
+    line-height: 1.7;
+  }
+
+  /* Footer */
+  footer {
+    padding: 3rem;
+    border-top: 0.5px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .footer-logo {
+    font-family: var(--font-mono);
+    font-size: 1rem;
+    color: var(--accent);
+    letter-spacing: 0.15em;
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  .footer-links a {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    color: var(--text2);
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .footer-links a:hover { color: var(--accent); }
+
+  .footer-copy {
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    color: var(--text2);
+    letter-spacing: 0.08em;
+  }
+
+  /* Status indicator */
+  .status-dot {
+    display: inline-block;
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: #22c55e;
+    animation: pulse 2s ease-in-out infinite;
+    margin-right: 0.5rem;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(34,197,94,0.5); }
+    50% { opacity: 0.7; box-shadow: 0 0 0 4px rgba(34,197,94,0); }
+  }
+
+  /* Animations */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s, transform 0.8s;
+  }
+  .fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @media (max-width: 900px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    .hero { padding: 0 1.5rem 4rem; }
+    .stats-bar { padding: 1.5rem; gap: 2rem; overflow-x: auto; }
+    .section { padding: 5rem 1.5rem; }
+    .servers-grid { grid-template-columns: 1fr; }
+    .features-layout { grid-template-columns: 1fr; gap: 3rem; }
+    .features-section { padding: 5rem 1.5rem; }
+    .rules-grid { grid-template-columns: 1fr; }
+    .rules-section { padding: 5rem 1.5rem; }
+    .ip-section { padding: 5rem 1.5rem; }
+    footer { flex-direction: column; gap: 1.5rem; text-align: center; }
+    .footer-links { justify-content: center; }
+    body { cursor: auto; }
+    .cursor, .cursor-ring { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- Nav -->
+<nav>
+  <a href="#" class="nav-logo">すとSV</a>
+  <ul class="nav-links">
+    <li><a href="#servers">サーバー</a></li>
+    <li><a href="#features">特徴</a></li>
+    <li><a href="#ip">接続</a></li>
+    <li><a href="#rules">ルール</a></li>
+  </ul>
+  <a href="#ip" class="nav-cta">今すぐ参加</a>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-scan"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-glow2"></div>
+
+  <div class="hero-tag"><span class="status-dot"></span>サーバー稼働中 — sutoserver.net</div>
+  <h1 class="hero-title">
+    <span class="line1">すと</span>
+    <span class="line2">サーバー</span>
+  </h1>
+  <p class="hero-sub">日本人運営による Minecraft マルチプレイサーバー。<br>国家・アナーキー・イベント——あなたの遊び方で。</p>
+  <div class="hero-actions">
+    <a href="#ip" class="btn-primary">サーバーに参加</a>
+    <div class="ip-box">IP: <span>sutoserver.net</span></div>
+  </div>
+
+  <div class="hero-scroll">Scroll</div>
+</section>
+
+<!-- Stats -->
+<div class="stats-bar fade-in">
+  <div class="stat-item">
+    <span class="stat-num">4</span>
+    <span class="stat-label">サーバー種別</span>
+  </div>
+  <div class="stat-divider"></div>
+  <div class="stat-item">
+    <span class="stat-num">24/7</span>
+    <span class="stat-label">稼働時間</span>
+  </div>
+  <div class="stat-divider"></div>
+  <div class="stat-item">
+    <span class="stat-num">JP</span>
+    <span class="stat-label">日本人運営</span>
+  </div>
+  <div class="stat-divider"></div>
+  <div class="stat-item">
+    <span class="stat-num">FREE</span>
+    <span class="stat-label">参加費用</span>
+  </div>
+</div>
+
+<!-- Servers Section -->
+<section class="section" id="servers">
+  <div class="section-label">Servers</div>
+  <h2 class="section-title fade-in">4つの<br>プレイ環境</h2>
+
+  <div class="servers-grid">
+    <div class="server-card accent1 fade-in">
+      <div class="card-num">01 / 04</div>
+      <span class="card-icon">🏯</span>
+      <h3 class="card-title">国家サーバー</h3>
+      <p class="card-desc">国を建国し、仲間を集め、領土を拡張しながら活動するサーバー。外交・同盟・戦争を通じて自国の発展を目指そう。</p>
+      <div class="card-tags">
+        <span class="tag">外交</span>
+        <span class="tag">同盟</span>
+        <span class="tag">戦争</span>
+        <span class="tag">建国</span>
+      </div>
+    </div>
+
+    <div class="server-card accent4 fade-in">
+      <div class="card-num">02 / 04</div>
+      <span class="card-icon">🌿</span>
+      <h3 class="card-title">サバイバルサーバー</h3>
+      <p class="card-desc">安定した環境でじっくりとサバイバルを楽しめるサーバー。経済システムを活用して仲間と協力しながら世界を発展させよう。</p>
+      <div class="card-tags">
+        <span class="tag">経済</span>
+        <span class="tag">協力</span>
+        <span class="tag">建築</span>
+        <span class="tag">初心者歓迎</span>
+      </div>
+    </div>
+
+    <div class="server-card accent2 fade-in">
+      <div class="card-num">03 / 04</div>
+      <span class="card-icon">⚔️</span>
+      <h3 class="card-title">アナーキーサーバー</h3>
+      <p class="card-desc">PvP・破壊・略奪すべて自由。完全自己責任のハードな環境で生き延びろ。ルールなき世界で己の力を証明せよ。</p>
+      <div class="card-tags">
+        <span class="tag">PvP自由</span>
+        <span class="tag">破壊OK</span>
+        <span class="tag">略奪OK</span>
+        <span class="tag">ハード</span>
+      </div>
+    </div>
+
+    <div class="server-card accent3 fade-in">
+      <div class="card-num">04 / 04</div>
+      <span class="card-icon">🎉</span>
+      <h3 class="card-title">イベントサーバー</h3>
+      <p class="card-desc">運営主催のイベントを不定期で開催。特別なルールや企画で普段と違う体験ができる。次のイベントをお楽しみに。</p>
+      <div class="card-tags">
+        <span class="tag">不定期開催</span>
+        <span class="tag">特別ルール</span>
+        <span class="tag">限定イベント</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Features -->
+<section class="features-section" id="features">
+  <div class="features-layout">
+    <div class="features-left fade-in">
+      <div class="section-label">Features</div>
+      <div class="big-text">なぜ<br>すとSV<br>なのか</div>
+      <p>安定した運営と長時間プレイ可能な環境を重視し、幅広いプレイスタイルを受け入れることを目的として構築されています。</p>
+    </div>
+    <div class="features-right">
+      <div class="feature-item fade-in">
+        <span class="feature-num">01</span>
+        <div class="feature-content">
+          <h3>経済システム</h3>
+          <p>独自の経済システムで、プレイヤー間の取引や市場が成立。資源を賢く使って富を築こう。</p>
+        </div>
+      </div>
+      <div class="feature-item fade-in">
+        <span class="feature-num">02</span>
+        <div class="feature-content">
+          <h3>日本人運営</h3>
+          <p>日本語で気軽に問い合わせ可能。迅速なサポートと安定した管理体制を提供しています。</p>
+        </div>
+      </div>
+      <div class="feature-item fade-in">
+        <span class="feature-num">03</span>
+        <div class="feature-content">
+          <h3>初心者歓迎</h3>
+          <p>マルチプレイが初めての方でも安心。フレンドリーなコミュニティと充実したサポート体制。</p>
+        </div>
+      </div>
+      <div class="feature-item fade-in">
+        <span class="feature-num">04</span>
+        <div class="feature-content">
+          <h3>定期イベント</h3>
+          <p>運営主催のイベントを不定期開催。普段のサバイバルとは違う特別な体験を提供します。</p>
+        </div>
+      </div>
+      <div class="feature-item fade-in">
+        <span class="feature-num">05</span>
+        <div class="feature-content">
+          <h3>役割分担された4サーバー</h3>
+          <p>各サーバーは明確に役割分担。どのような遊び方でも、自分に合った環境を選べます。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- IP Section -->
+<section class="ip-section" id="ip">
+  <div class="section-label" style="justify-content:center;">Join Now</div>
+  <h2 class="section-title fade-in" style="margin:0 auto 0; text-align:center; max-width:100%;">今すぐ参加しよう</h2>
+
+  <div class="ip-display" onclick="copyIP()" title="クリックしてコピー">
+    sutoserver.net
+  </div>
+  <div>
+    <p class="copy-hint">クリックしてIPをコピー</p>
+    <span class="ip-copied" id="copiedMsg">コピーしました!</span>
+  </div>
+</section>
+
+<!-- Rules -->
+<section class="rules-section" id="rules">
+  <div class="section-label">Rules</div>
+  <h2 class="section-title fade-in">ルール</h2>
+
+  <div class="rules-grid">
+    <div class="rule-card fade-in" data-num="R-01">
+      <div class="rule-icon">🚫</div>
+      <div class="rule-title">チートの禁止</div>
+      <div class="rule-desc">改造クライアントや不正ツールの使用は全サーバーで禁止。公平な環境を守るため厳格に対処します。</div>
+    </div>
+    <div class="rule-card fade-in" data-num="R-02">
+      <div class="rule-icon">💬</div>
+      <div class="rule-title">誹謗中傷の禁止</div>
+      <div class="rule-desc">他プレイヤーへの暴言・差別的発言は禁止。健全なコミュニティのためリスペクトを忘れずに。</div>
+    </div>
+    <div class="rule-card fade-in" data-num="R-03">
+      <div class="rule-icon">⚙️</div>
+      <div class="rule-title">サーバー別ルール</div>
+      <div class="rule-desc">各サーバーには固有のルールがあります。参加前に必ず各サーバーのルールを確認してください。</div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-logo">すとSV</div>
+  <ul class="footer-links">
+    <li><a href="#">ホーム</a></li>
+    <li><a href="#servers">サーバー</a></li>
+    <li><a href="#">ニュース</a></li>
+    <li><a href="#">運営募集</a></li>
+    <li><a href="#rules">ルール</a></li>
+  </ul>
+  <div class="footer-copy">© 2025 すとサーバー. All rights reserved.</div>
+</footer>
+
+<script>
+  // Custom cursor
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    cursor.style.left = mx - 4 + 'px';
+    cursor.style.top = my - 4 + 'px';
+  });
+
+  function animateRing() {
+    rx += (mx - rx - 16) * 0.12;
+    ry += (my - ry - 16) * 0.12;
+    ring.style.left = rx + 'px';
+    ring.style.top = ry + 'px';
+    requestAnimationFrame(animateRing);
+  }
+  animateRing();
+
+  document.querySelectorAll('a, button, .server-card, .ip-display').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      ring.style.width = '50px';
+      ring.style.height = '50px';
+      ring.style.opacity = '0.5';
+    });
+    el.addEventListener('mouseleave', () => {
+      ring.style.width = '32px';
+      ring.style.height = '32px';
+      ring.style.opacity = '1';
+    });
+  });
+
+  // Copy IP
+  function copyIP() {
+    navigator.clipboard.writeText('sutoserver.net').then(() => {
+      const msg = document.getElementById('copiedMsg');
+      msg.classList.add('show');
+      setTimeout(() => msg.classList.remove('show'), 2000);
+    });
+  }
+
+  // Fade-in on scroll
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 80);
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+  // Smooth scroll for anchors
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth' }); }
+    });
+  });
+</script>
+</body>
+</html>
