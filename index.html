@@ -9,7 +9,10 @@
             --bg-color: #0a0a0a;
             --accent-color: #00ffcc;
             --nav-bg: rgba(0, 0, 0, 0.9);
+            --card-bg: rgba(255, 255, 255, 0.05);
         }
+
+        html { scroll-behavior: smooth; }
 
         body {
             margin: 0;
@@ -17,10 +20,10 @@
             font-family: 'Helvetica Neue', Arial, "Hiragino Kaku Gothic ProN", sans-serif;
             background-color: var(--bg-color);
             color: white;
-            text-align: center;
+            line-height: 1.6;
         }
 
-        /* --- 固定ナビゲーションバー --- */
+        /* ナビゲーション */
         nav {
             position: fixed;
             top: 0;
@@ -42,62 +45,144 @@
             font-weight: bold;
             font-size: 0.85rem;
             transition: 0.3s;
-            letter-spacing: 1px;
         }
 
-        nav a:hover {
-            color: var(--accent-color);
-            text-shadow: 0 0 10px var(--accent-color);
-        }
+        nav a:hover { color: var(--accent-color); }
 
-        /* --- メインコンテンツ --- */
+        /* メインヘッダー */
         header {
-            height: 100vh;
+            height: 60vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
+            text-align: center;
             background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1627398242454-45a1465c2479?auto=format&fit=crop&q=80&w=1000') center/cover;
         }
 
-        h1 {
-            font-size: clamp(2.5rem, 10vw, 5rem);
-            margin: 0;
-            letter-spacing: 10px;
-        }
+        h1 { font-size: clamp(2.5rem, 8vw, 4.5rem); margin: 0; letter-spacing: 8px; }
 
-        .ip-copy {
-            margin-top: 30px;
-            padding: 15px 30px;
-            border: 1px solid var(--accent-color);
-            border-radius: 50px;
-            cursor: pointer;
+        section { padding: 80px 20px; max-width: 1100px; margin: 0 auto; }
+        .section-title { text-align: center; font-size: 2.5rem; margin-bottom: 40px; color: var(--accent-color); }
+
+        /* 参加方法 */
+        .join-box {
+            background: var(--card-bg);
+            border: 1px dashed var(--accent-color);
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .ip-text { font-family: monospace; font-size: 1.8rem; color: var(--accent-color); cursor: pointer; }
+
+        /* カード共通 */
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; }
+        .card {
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
             transition: 0.3s;
-            background: rgba(0, 255, 204, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
+        .card:hover { transform: translateY(-10px); border-color: var(--accent-color); }
 
-        .ip-copy:hover {
-            background: var(--accent-color);
-            color: black;
+        /* 募集用ボタン */
+        .btn {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 10px 25px;
+            background: transparent;
+            color: white;
+            border: 1px solid white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: 0.3s;
         }
+        .btn:hover { background: var(--accent-color); color: black; border-color: var(--accent-color); }
+
+        .note { text-align: center; margin-top: 30px; color: #888; font-size: 0.9rem; }
+
+        footer { text-align: center; padding: 50px; color: #444; }
+
     </style>
 </head>
 <body>
 
     <nav>
-    <a href="index.html">HOME</a>
-    <a href="anarchy.html">アナーキー鯖説明</a>
-    <a href="kokka.html">国家鯖説明</a>
-    <a href="https://rule.sutoserver.com/">RULE</a>
-    <a href="https://status.sutoserver.com/">STATUS</a>
+        <a href="#">HOME</a>
+        <a href="#join">JOIN</a>
+        <a href="#recruit">RECRUIT</a>
+        <a href="https://status.sutoserver.com/" target="_blank">STATUS</a>
+        <a href="https://rule.sutoserver.com/" target="_blank">RULE</a>
     </nav>
-
 
     <header>
         <h1>SUTOSERVER</h1>
-        <p>自由か、秩序か。</p>
-        <div class="ip-copy" onclick="copyIP()">IP: sutoserver.net (Click to Copy)</div>
+        <p>自由か、秩序か。君の選択が歴史を創る。</p>
     </header>
+
+    <section id="join">
+        <h2 class="section-title">JOIN</h2>
+        <div class="join-box">
+            <p>サーバーアドレス（Java/統合版 共通）</p>
+            <div class="ip-text" onclick="copyIP()">sutoserver.net</div>
+            <p style="font-size: 0.8rem; margin-top: 10px;">クリックしてコピー</p>
+        </div>
+        <div class="grid">
+            <div class="card">
+                <h3 style="color: #ff4d4d;">ANARCHY</h3>
+                <p>ルール無用の無法地帯</p>
+                <a href="anarchy.html" class="btn">詳細を見る</a>
+            </div>
+            <div class="card">
+                <h3 style="color: #4d94ff;">NATIONS</h3>
+                <p>建国と外交の国家鯖</p>
+                <a href="kokka.html" class="btn">詳細を見る</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="recruit">
+        <h2 class="section-title">RECRUIT</h2>
+        <p style="text-align: center; margin-bottom: 30px;">現在、サーバーを共に盛り上げる運営メンバーを募集中です。</p>
+        
+        <div class="grid">
+            <div class="card">
+                <h3>⚙️ Developer</h3>
+                <p>プラグイン制作・技術担当</p>
+                <a href="https://forms.cloud.microsoft/pages/responsepage.aspx?id=DQSIkWdsW0yxEjajBLZtrQAAAAAAAAAAAANAAqBp6whUQjYxWkVDUTNCRjJFOU04SVVVTU00WjNGUi4u&route=shorturl" target="_blank" class="btn">応募する</a>
+            </div>
+
+            <div class="card">
+                <h3>👮 Moderator</h3>
+                <p>プレイヤー対応・治安管理</p>
+                <a href="https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=DQSIkWdsW0yxEjajBLZtrQAAAAAAAAAAAANAAqBp6whUNk9FSVpDVkpXUkRQV0NURE04RlhFNDQ1Si4u" target="_blank" class="btn">応募する</a>
+            </div>
+
+            <div class="card">
+                <h3>🏗️ Builder</h3>
+                <p>ワールド制作・装飾</p>
+                <a href="https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=DQSIkWdsW0yxEjajBLZtrQAAAAAAAAAAAANAAqBp6whUNFQwMzVaNVhRTlhLNTZNTzJYNjVFSUg3WC4u" target="_blank" class="btn">応募する</a>
+            </div>
+
+            <div class="card">
+                <h3>📱 SNS班</h3>
+                <p>広報・宣伝・SNS運用</p>
+                <a href="https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=DQSIkWdsW0yxEjajBLZtrQAAAAAAAAAAAANAAqBp6whUMVc1SFhURDBXU0lMTEpBN1FWOENDUTRYUy4u" target="_blank" class="btn">応募する</a>
+            </div>
+        </div>
+
+        <div class="note">
+            ※ 採用は審査制です。荒らし行為等は即不採用となります。
+        </div>
+    </section>
+
+    <footer>
+        &copy; 2026 SutoServer Community.
+    </footer>
 
     <script>
         function copyIP() {
