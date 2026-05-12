@@ -124,26 +124,48 @@
         <p>自由か、秩序か。君の選択が歴史を創る。</p>
     </header>
 
-    <section id="join">
-        <h2 class="section-title">JOIN</h2>
-        <div class="join-box">
-            <p>サーバーアドレス（Java/統合版 共通）</p>
-            <div class="ip-text" onclick="copyIP()">sutoserver.net</div>
-            <p style="font-size: 0.8rem; margin-top: 10px;">クリックしてコピー</p>
-        </div>
+        <section id="join">
+        <h2 class="section-title">HOW TO JOIN</h2>
+        <p style="text-align: center; margin-bottom: 30px;">自分に合った方法でサーバーに参加しよう！</p>
+        
         <div class="grid">
             <div class="card">
-                <h3 style="color: #ff4d4d;">ANARCHY</h3>
-                <p>ルール無用の無法地帯</p>
-                <a href="anarchy.html" class="btn">詳細を見る</a>
+                <h3>🌐 アドレスで参加</h3>
+                <p>Java版 / 統合版 共通</p>
+                <div class="ip-text" onclick="copyText('sutoserver.net')">sutoserver.net</div>
+                <p class="note" style="margin-top:10px;">クリックしてコピー</p>
             </div>
+
             <div class="card">
+                <h3>👤 フレンド追加で参加</h3>
+                <p>統合版 (Switch/PS4/ゲーム機等)</p>
+                <div class="ip-text" style="color: #f1c40f;" onclick="copyText('sutosrv1')">sutosrv1</div>
+                <p class="note" style="margin-top:10px;">ゲーマータグを検索して追加</p>
+            </div>
+        </div>
+
+        <div class="grid" style="margin-top: 20px;">
+            <div class="card anarchy">
+                <h3 style="color: #ff4d4d;">ANARCHY</h3>
+                <p>混沌のアナーキー鯖</p>
+                <a href="anarchy.html" class="btn">ルールを見る</a>
+            </div>
+            <div class="card nations">
                 <h3 style="color: #4d94ff;">NATIONS</h3>
-                <p>建国と外交の国家鯖</p>
-                <a href="kokka.html" class="btn">詳細を見る</a>
+                <p>秩序の国家鯖</p>
+                <a href="kokka.html" class="btn">ルールを見る</a>
             </div>
         </div>
     </section>
+
+    <script>
+        function copyText(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                alert("コピーしました！: " + text);
+            });
+        }
+    </script>
+
 
     <section id="recruit">
         <h2 class="section-title">RECRUIT</h2>
