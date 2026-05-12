@@ -7,208 +7,101 @@
     <style>
         :root {
             --bg-color: #0a0a0a;
-            --anarchy-color: #ff4d4d;
-            --nations-color: #4d94ff;
             --accent-color: #00ffcc;
-            --card-bg: rgba(255, 255, 255, 0.05);
+            --nav-bg: rgba(0, 0, 0, 0.9);
         }
 
         body {
             margin: 0;
             padding: 0;
-            font-family: 'Helvetica Neue', Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", sans-serif;
+            font-family: 'Helvetica Neue', Arial, "Hiragino Kaku Gothic ProN", sans-serif;
             background-color: var(--bg-color);
             color: white;
-            overflow-x: hidden;
-            line-height: 1.6;
+            text-align: center;
         }
 
-        /* 背景 */
-        .background-animate {
+        /* --- 固定ナビゲーションバー --- */
+        nav {
             position: fixed;
             top: 0;
-            left: 0;
             width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at 50% 50%, #1a1a1a 0%, #0a0a0a 100%);
-            z-index: -1;
+            height: 60px;
+            background: var(--nav-bg);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
 
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: bold;
+            font-size: 0.85rem;
+            transition: 0.3s;
+            letter-spacing: 1px;
+        }
+
+        nav a:hover {
+            color: var(--accent-color);
+            text-shadow: 0 0 10px var(--accent-color);
+        }
+
+        /* --- メインコンテンツ --- */
         header {
-            height: 50vh;
+            height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            text-align: center;
             background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1627398242454-45a1465c2479?auto=format&fit=crop&q=80&w=1000') center/cover;
-            border-bottom: 2px solid var(--accent-color);
         }
 
-        h1 { font-size: clamp(2.5rem, 8vw, 4rem); margin: 0; letter-spacing: 5px; text-shadow: 0 0 20px var(--accent-color); }
-        .subtitle { font-size: 1.1rem; color: #ccc; margin-top: 10px; }
-
-        .main-content { max-width: 1100px; margin: -40px auto 50px; padding: 0 20px; }
-
-        /* 参加方法セクション */
-        .join-section {
-            background: var(--card-bg);
-            backdrop-filter: blur(10px);
-            border-radius: 15px;
-            padding: 20px;
-            text-align: center;
-            margin-bottom: 40px;
-            border: 1px dashed var(--accent-color);
+        h1 {
+            font-size: clamp(2.5rem, 10vw, 5rem);
+            margin: 0;
+            letter-spacing: 10px;
         }
 
-        .ip-box {
-            display: inline-block;
-            background: #000;
-            padding: 10px 25px;
-            border-radius: 5px;
-            font-family: monospace;
-            font-size: 1.5rem;
-            color: var(--accent-color);
+        .ip-copy {
+            margin-top: 30px;
+            padding: 15px 30px;
+            border: 1px solid var(--accent-color);
+            border-radius: 50px;
             cursor: pointer;
             transition: 0.3s;
-            margin-top: 10px;
-            border: 1px solid #333;
+            background: rgba(0, 255, 204, 0.1);
         }
 
-        .ip-box:hover { background: #111; border-color: var(--accent-color); }
-
-        /* サーバーグリッド */
-        .section-title { text-align: center; margin: 60px 0 30px; font-size: 2rem; border-bottom: 1px solid #333; padding-bottom: 10px; }
-        .server-grid, .staff-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
-
-        .card {
-            background: var(--card-bg);
-            backdrop-filter: blur(10px);
-            border-radius: 15px;
-            padding: 30px;
-            text-align: center;
-            transition: 0.3s ease;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+        .ip-copy:hover {
+            background: var(--accent-color);
+            color: black;
         }
-
-        .card:hover { transform: translateY(-10px); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-
-        /* カラー分岐 */
-        .anarchy:hover { border-color: var(--anarchy-color); }
-        .nations:hover { border-color: var(--nations-color); }
-        .anarchy h2 { color: var(--anarchy-color); }
-        .nations h2 { color: var(--nations-color); }
-
-        /* 運営募集カード */
-        .staff-card h3 { margin-top: 0; color: var(--accent-color); }
-        .btn {
-            display: inline-block;
-            margin-top: 15px;
-            padding: 10px 25px;
-            border-radius: 5px;
-            text-decoration: none;
-            font-weight: bold;
-            transition: 0.3s;
-            background: transparent;
-            border: 1px solid white;
-            color: white;
-        }
-        .staff-card .btn:hover { background: var(--accent-color); color: black; border-color: var(--accent-color); }
-        .server-btn { border-color: white; }
-        .anarchy .server-btn:hover { background: var(--anarchy-color); border-color: var(--anarchy-color); }
-        .nations .server-btn:hover { background: var(--nations-color); border-color: var(--nations-color); }
-
-        /* リンクボタン */
-        .external-links { text-align: center; margin-top: 50px; }
-        .link-btn {
-            display: inline-block;
-            margin: 5px;
-            padding: 12px 30px;
-            background: #222;
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
-            transition: 0.3s;
-        }
-        .link-btn:hover { background: var(--accent-color); color: black; }
-
-        .note { font-size: 0.8rem; color: #888; margin-top: 20px; }
-
-        footer { text-align: center; padding: 60px 20px; color: #555; }
     </style>
 </head>
 <body>
 
-    <div class="background-animate"></div>
+    <nav>
+        <a href="index.html">HOME</a>
+        <a href="anarchy.md">アナーキー鯖説明</a>
+        <a href="kokka.md">国家鯖説明</a>
+        <a href="rule.sutoserver.com">RULE</a>
+        <a href="status.sutoserver.com">STATUS</a>
+    </nav>
 
     <header>
         <h1>SUTOSERVER</h1>
-        <p class="subtitle">―― 混沌か、秩序か。君が歴史を刻む番だ。</p>
+        <p>自由か、秩序か。</p>
+        <div class="ip-copy" onclick="copyIP()">IP: sutoserver.net (Click to Copy)</div>
     </header>
-
-    <div class="main-content">
-        <section class="join-section">
-            <h3>🎮 参加方法</h3>
-            <p>Java / 統合版 共通アドレス</p>
-            <div class="ip-box" onclick="copyIP()">sutoserver.net</div>
-            <p style="font-size: 0.8rem; color: #00ffcc; margin-top: 5px;">↑ クリックでコピー</p>
-        </section>
-
-        <div class="server-grid">
-            <div class="card anarchy">
-                <h2>ANARCHY</h2>
-                <p>ルールなし、慈悲なし。<br>この荒廃した世界で生き残れ。</p>
-                <a href="#" class="btn server-btn">GO TO ANARCHY</a>
-            </div>
-            <div class="card nations">
-                <h2>NATIONS</h2>
-                <p>法を敷き、領土を広げよ。<br>仲間と共に最強の帝国を築け。</p>
-                <a href="#" class="btn server-btn">GO TO NATIONS</a>
-            </div>
-        </div>
-
-        <div class="external-links">
-            <a href="https://status.sutoserver.com" target="_blank" class="link-btn">SERVER STATUS</a>
-            <a href="https://rule.sutoserver.com" target="_blank" class="link-btn">SERVER RULES</a>
-        </div>
-
-        <h2 class="section-title">🛠️ 運営募集</h2>
-        <div class="staff-grid">
-            <div class="card staff-card">
-                <h3>⚙️ Developer</h3>
-                <p>プラグイン制作・技術担当</p>
-                <a href="https://forms.cloud.microsoft/pages/responsepage.aspx?id=DQSIkWdsW0yxEjajBLZtrQAAAAAAAAAAAANAAqBp6whUQjYxWkVDUTNCRjJFOU04SVVVTU00WjNGUi4u&route=shorturl" target="_blank" class="btn">応募する</a>
-            </div>
-            <div class="card staff-card">
-                <h3>👮 Moderator</h3>
-                <p>プレイヤー対応・治安管理</p>
-                <a href="https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=DQSIkWdsW0yxEjajBLZtrQAAAAAAAAAAAANAAqBp6whUNk9FSVpDVkpXUkRQV0NURE04RlhFNDQ1Si4u" target="_blank" class="btn">応募する</a>
-            </div>
-            <div class="card staff-card">
-                <h3>🏗️ Builder</h3>
-                <p>ワールド制作・装飾</p>
-                <a href="https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=DQSIkWdsW0yxEjajBLZtrQAAAAAAAAAAAANAAqBp6whUNFQwMzVaNVhRTlhLNTZNTzJYNjVFSUg3WC4u" target="_blank" class="btn">応募する</a>
-            </div>
-            <div class="card staff-card">
-                <h3>📱 SNS班</h3>
-                <p>広報・宣伝・SNS運用</p>
-                <a href="https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=DQSIkWdsW0yxEjajBLZtrQAAAAAAAAAAAANAAqBp6whUMVc1SFhURDBXU0lMTEpBN1FWOENDUTRYUy4u" target="_blank" class="btn">応募する</a>
-            </div>
-        </div>
-        <div class="note">
-            ※ 採用は審査制です。荒らし行為が発覚した場合は即不採用となります。
-        </div>
-    </div>
-
-    <footer>
-        &copy; 2026 SutoServer Community.
-    </footer>
 
     <script>
         function copyIP() {
-            const ip = "sutoserver.net";
-            navigator.clipboard.writeText(ip).then(() => {
-                alert("IPアドレスをコピーしました！: " + ip);
+            navigator.clipboard.writeText("sutoserver.net").then(() => {
+                alert("IPアドレスをコピーしました！");
             });
         }
     </script>
