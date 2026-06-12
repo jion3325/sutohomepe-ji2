@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin日記 - SutoServer</title>
+    <style>
+        :root { --primary: #38bdf8; --bg: #050505; --card: #111; }
+        body { margin: 0; background-color: var(--bg); color: #e2e8f0; font-family: 'Segoe UI', sans-serif; }
+        
+        /* ナビゲーション */
+        nav { background: rgba(17, 17, 17, 0.9); padding: 1rem; border-bottom: 2px solid var(--primary); display: flex; justify-content: center; gap: 20px; position: sticky; top: 0; z-index: 100; backdrop-filter: blur(5px); }
+        nav a { color: var(--primary); text-decoration: none; font-weight: bold; transition: 0.3s; }
+        nav a:hover { color: white; }
+        
+        .container { max-width: 900px; margin: 0 auto; padding: 40px 20px; }
+        h1 { font-size: 2.5rem; text-align: center; color: var(--primary); margin-bottom: 40px; }
+        
+        /* 日記のグリッドとカード */
+        .blog-grid { display: flex; flex-direction: column; gap: 20px; }
+        .blog-card { background: var(--card); padding: 25px; border-radius: 12px; border: 1px solid #333; border-left: 5px solid var(--primary); }
+        .blog-date { color: #94a3b8; font-size: 0.9rem; margin-bottom: 10px; }
+        .blog-title { font-size: 1.4rem; margin: 0 0 15px 0; color: white; }
+        .blog-content { line-height: 1.6; color: #cbd5e1; }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="./index.html">Home</a>
+        <a href="./index.html#recruit">運営募集</a>
+        <a href="./blog.html">Admin日記</a>
+        <a href="./index.html#staff">運営紹介</a>
+    </nav>
+
+    <div class="container">
+        <h1>📝 Admin日記</h1>
+        
+        <div class="blog-grid">
+
+            <div class="blog-card">
+                <div class="blog-date">2026年6月12日</div>
+                <h2 class="blog-title">ホームページを開設しました！＆今後のアプデ予定</h2>
+                <div class="blog-content">
+                    <p>本日、SutoServerの公式ポータルサイトを公開しました！今後はここやステータスページを拠点に情報を発信していきます。</p>
+                    <p>現在、国家鯖の新しいプラグイン調整を進めています。近日中にテストに入る予定なのでお楽しみに！</p>
+                </div>
+            </div>
+            <div class="blog-card" style="border-left-color: #475569;">
+                <div class="blog-date">2026年4月03日</div>
+                <h2 class="blog-title">サーバーテスト運用開始のお知らせ</h2>
+                <div class="blog-content">
+                    <p>ロビー鯖およびアナーキー鯖の基盤が完成し、身内でのテスト運用を開始しました。負荷対策を中心に調整中です。</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+</html>
