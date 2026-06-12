@@ -21,13 +21,11 @@
         /* IPボックス */
         .ip-box { background: #1e293b; padding: 20px; border-radius: 8px; text-align: center; font-family: monospace; border-left: 4px solid var(--primary); margin-bottom: 30px; }
         
-        /* 募集カード */
-        .recruit-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin: 20px 0; }
-        .recruit-card { background: #1a1e26; padding: 20px; border-radius: 10px; border: 1px solid #334155; text-align: center; }
+        /* 募集・運営カード */
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin: 20px 0; }
+        .card { background: #1a1e26; padding: 20px; border-radius: 10px; border: 1px solid #334155; text-align: center; }
         .btn { display: inline-block; padding: 10px 20px; background: var(--primary); color: #050505; text-decoration: none; border-radius: 6px; font-weight: bold; margin-top: 10px; }
         .status-closed { color: #94a3b8; background: #334155; padding: 8px; border-radius: 5px; display: block; margin-top: 10px; }
-        
-        /* 注意書き */
         .notice { border: 1px dashed #f59e0b; color: #fbbf24; padding: 15px; border-radius: 8px; background: #1a1506; text-align: center; }
     </style>
 </head>
@@ -36,7 +34,7 @@
     <nav>
         <a href="#home">Home</a>
         <a href="#recruit">運営募集</a>
-        <a href="#blog">Admin日記</a>
+        <a href="#blog">日記・ステータス</a>
         <a href="#staff">運営紹介</a>
     </nav>
 
@@ -49,43 +47,50 @@
 
         <section id="recruit" class="section">
             <h2>🛠️ 運営募集</h2>
-            <div class="recruit-grid">
-                <div class="recruit-card">
+            <div class="grid">
+                <div class="card">
                     <h3>⚙️ Developer</h3>
                     <p>プラグイン制作・技術</p>
                     <span class="status-closed">現在募集停止</span>
                 </div>
-                <div class="recruit-card">
+                <div class="card">
                     <h3>👮 Moderator</h3>
-                    <p>治安管理</p>
+                    <p>プレイヤー対応・治安管理</p>
                     <a href="https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=DQSIkWdsW0yxEjajBLZtrQAAAAAAAAAAAANAAqBp6whUNk9FSVpDVkpXUkRQV0NURE04RlhFNDQ1Si4u" class="btn">応募する</a>
                 </div>
-                <div class="recruit-card">
+                <div class="card">
                     <h3>🏗️ Builder</h3>
-                    <p>ワールド制作</p>
+                    <p>ワールド制作・装飾</p>
                     <a href="https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=DQSIkWdsW0yxEjajBLZtrQAAAAAAAAAAAANAAqBp6whUNFQwMzVaNVhRTlhLNTZNTzJYNjVFSUg3WC4u" class="btn">応募する</a>
                 </div>
-                <div class="recruit-card">
+                <div class="card">
                     <h3>📱 SNS班</h3>
-                    <p>広報・宣伝</p>
+                    <p>広報・宣伝（受かりやすい！）</p>
                     <a href="https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=DQSIkWdsW0yxEjajBLZtrQAAAAAAAAAAAANAAqBp6whUMVc1SFhURDBXU0lMTEpBN1FWOENDUTRYUy4u" class="btn">応募する</a>
                 </div>
             </div>
             <div class="notice">
-                ⚠️ 注意：採用は審査制です。荒らしは即不採用となります。
+                ⚠️ 注意：採用は審査制です。荒らし行為は即不採用となります。
             </div>
         </section>
 
         <section id="blog" class="section">
-            <h2>📝 Admin日記</h2>
-            <p>運営の裏話や開発の進捗を更新中。</p>
-            <a href="https://status.sutoserver.net" class="btn" style="background:#475569; color:white;">ステータス確認</a>
+            <h2>📝 日記・ステータス</h2>
+            <a href="https://status.sutoserver.com" class="btn" style="background:#4ade80;">サーバー稼働状況</a>
+            <a href="https://github.com/あなたのユーザー名/リポジトリ名/issues" class="btn" style="background:#818cf8;">Admin日記を読む</a>
         </section>
 
         <section id="staff" class="section">
             <h2>👥 運営紹介</h2>
-            <p>サーバーを運営する個性豊かなメンバーです。</p>
-            </section>
+            <div class="grid">
+                <div class="card"><h3>人外代表人間さん</h3><p>Admin / Developer</p></div>
+                <div class="card"><h3>じおん</h3><p>Admin / Developer / Builder / Moderator</p></div>
+                <div class="card"><h3>すと</h3><p>Admin / Developer / SNS / Moderator</p></div>
+                <div class="card"><h3>べーこん</h3><p>Developer / SNS / Builder / Moderator</p></div>
+                <div class="card"><h3>ぬっこ</h3><p>Developer / SNS / Builder / Moderator</p></div>
+                <div class="card"><h3>きなこ</h3><p>Developer / SNS</p></div>
+            </div>
+        </section>
     </div>
 
 </body>
