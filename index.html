@@ -5,16 +5,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SutoServer Portal</title>
     <style>
-        body { margin: 0; background-color: #050505; color: #e2e8f0; font-family: 'Segoe UI', sans-serif; }
+        :root { --primary: #38bdf8; --bg: #050505; --card: #111; }
+        body { margin: 0; background-color: var(--bg); color: #e2e8f0; font-family: 'Segoe UI', sans-serif; scroll-behavior: smooth; }
         
-        /* ナビゲーションバー */
-        nav { background: #111; padding: 1rem; border-bottom: 2px solid #38bdf8; display: flex; justify-content: center; gap: 20px; position: sticky; top: 0; }
-        nav a { color: #38bdf8; text-decoration: none; font-weight: bold; }
+        /* ナビゲーション */
+        nav { background: rgba(17, 17, 17, 0.9); padding: 1rem; border-bottom: 2px solid var(--primary); display: flex; justify-content: center; gap: 20px; position: sticky; top: 0; z-index: 100; backdrop-filter: blur(5px); }
+        nav a { color: var(--primary); text-decoration: none; font-weight: bold; transition: 0.3s; }
+        nav a:hover { color: white; }
         
-        .container { max-width: 800px; margin: 40px auto; padding: 20px; }
-        .section { background: #111; padding: 20px; border-radius: 12px; margin-bottom: 30px; }
-        h2 { border-left: 4px solid #38bdf8; padding-left: 15px; }
-        .btn { display: inline-block; padding: 10px 20px; background: #38bdf8; color: #050505; text-decoration: none; border-radius: 6px; font-weight: bold; margin-top: 10px; }
+        .container { max-width: 900px; margin: 0 auto; padding: 40px 20px; }
+        h1 { font-size: 3rem; text-align: center; background: linear-gradient(90deg, #38bdf8, #818cf8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .section { background: var(--card); padding: 30px; border-radius: 12px; margin-bottom: 40px; border: 1px solid #333; }
+        h2 { border-left: 4px solid var(--primary); padding-left: 15px; margin-top: 0; }
+        
+        /* IPボックス */
+        .ip-box { background: #1e293b; padding: 20px; border-radius: 8px; text-align: center; font-family: monospace; border-left: 4px solid var(--primary); margin-bottom: 30px; }
+        
+        /* 募集カード */
+        .recruit-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin: 20px 0; }
+        .recruit-card { background: #1a1e26; padding: 20px; border-radius: 10px; border: 1px solid #334155; text-align: center; }
+        .btn { display: inline-block; padding: 10px 20px; background: var(--primary); color: #050505; text-decoration: none; border-radius: 6px; font-weight: bold; margin-top: 10px; }
+        .status-closed { color: #94a3b8; background: #334155; padding: 8px; border-radius: 5px; display: block; margin-top: 10px; }
+        
+        /* 注意書き */
+        .notice { border: 1px dashed #f59e0b; color: #fbbf24; padding: 15px; border-radius: 8px; background: #1a1506; text-align: center; }
     </style>
 </head>
 <body>
@@ -26,31 +40,52 @@
         <a href="#staff">運営紹介</a>
     </nav>
 
-    <div class="container">
-        <section id="home">
-            <h1>SutoServer Portal</h1>
-            <p>国家・アナーキー・ロビー鯖の管理ポータルへようこそ。</p>
-        </section>
+    <div class="container" id="home">
+        <h1>SutoServer Portal</h1>
+        <div class="ip-box">
+            Java: <b>sutoserver.net</b><br>
+            統合版: <b>sutoserver.net</b> (Port: 19312)
+        </div>
 
         <section id="recruit" class="section">
-            <h2>運営募集</h2>
-            <p>サーバーを一緒に盛り上げてくれる仲間を募集中です！</p>
-            <a href="https://forms.google.com/..." class="btn">応募フォームへ</a>
+            <h2>🛠️ 運営募集</h2>
+            <div class="recruit-grid">
+                <div class="recruit-card">
+                    <h3>⚙️ Developer</h3>
+                    <p>プラグイン制作・技術</p>
+                    <span class="status-closed">現在募集停止</span>
+                </div>
+                <div class="recruit-card">
+                    <h3>👮 Moderator</h3>
+                    <p>治安管理</p>
+                    <a href="https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=DQSIkWdsW0yxEjajBLZtrQAAAAAAAAAAAANAAqBp6whUNk9FSVpDVkpXUkRQV0NURE04RlhFNDQ1Si4u" class="btn">応募する</a>
+                </div>
+                <div class="recruit-card">
+                    <h3>🏗️ Builder</h3>
+                    <p>ワールド制作</p>
+                    <a href="https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=DQSIkWdsW0yxEjajBLZtrQAAAAAAAAAAAANAAqBp6whUNFQwMzVaNVhRTlhLNTZNTzJYNjVFSUg3WC4u" class="btn">応募する</a>
+                </div>
+                <div class="recruit-card">
+                    <h3>📱 SNS班</h3>
+                    <p>広報・宣伝</p>
+                    <a href="https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=DQSIkWdsW0yxEjajBLZtrQAAAAAAAAAAAANAAqBp6whUMVc1SFhURDBXU0lMTEpBN1FWOENDUTRYUy4u" class="btn">応募する</a>
+                </div>
+            </div>
+            <div class="notice">
+                ⚠️ 注意：採用は審査制です。荒らしは即不採用となります。
+            </div>
         </section>
 
         <section id="blog" class="section">
-            <h2>Admin日記</h2>
-            <p>2026/06/12: 新しい国家プラグインを導入しました...</p>
-            <a href="#" class="btn">過去の日記を読む</a>
+            <h2>📝 Admin日記</h2>
+            <p>運営の裏話や開発の進捗を更新中。</p>
+            <a href="https://status.sutoserver.net" class="btn" style="background:#475569; color:white;">ステータス確認</a>
         </section>
 
         <section id="staff" class="section">
-            <h2>運営紹介</h2>
-            <ul>
-                <li><strong>Owner:</strong> サーバーの全権限保持者</li>
-                <li><strong>Admin:</strong> 治安維持・イベント運営担当</li>
-            </ul>
-        </section>
+            <h2>👥 運営紹介</h2>
+            <p>サーバーを運営する個性豊かなメンバーです。</p>
+            </section>
     </div>
 
 </body>
