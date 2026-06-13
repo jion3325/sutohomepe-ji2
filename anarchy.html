@@ -3,112 +3,73 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>アナーキー鯖説明 | SutoServer</title>
+    <title>アナーキー鯖 - SutoServer</title>
     <style>
-        :root {
-            --bg-color: #0a0a0a;
-            --anarchy-red: #ff4d4d;
-            --text-color: #e0e0e0;
-        }
-
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            font-family: 'Helvetica Neue', Arial, "Hiragino Kaku Gothic ProN", sans-serif;
-            line-height: 1.8;
-            margin: 0;
-            padding: 0;
-        }
-
-        .container {
-            max-width: 800px;
-            margin: 60px auto;
-            padding: 20px;
-            border-left: 4px solid var(--anarchy-red);
-            background: linear-gradient(90deg, rgba(255, 77, 77, 0.05) 0%, rgba(0,0,0,0) 100%);
-        }
-
-        h1 {
-            color: var(--anarchy-red);
-            font-size: 2.5rem;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            border-bottom: 1px solid #333;
-            padding-bottom: 10px;
-        }
-
-        h2 {
-            color: var(--anarchy-red);
-            margin-top: 40px;
-            font-size: 1.5rem;
-            display: flex;
-            align-items: center;
-        }
-
-        h2::before {
-            content: "⚡";
-            margin-right: 10px;
-        }
-
-        ul {
-            list-style: none;
-            padding-left: 0;
-        }
-
-        li {
-            margin-bottom: 15px;
-            padding: 10px;
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 5px;
-        }
-
-        strong {
-            color: var(--anarchy-red);
-        }
-
-        .warning-box {
-            border: 1px solid #444;
-            padding: 20px;
-            margin-top: 40px;
-            border-radius: 10px;
-            background: rgba(255, 0, 0, 0.02);
-        }
-
-        .back-link {
-            display: inline-block;
-            margin-top: 40px;
-            color: #888;
-            text-decoration: none;
-            transition: 0.3s;
-        }
-
-        .back-link:hover {
-            color: var(--anarchy-red);
-        }
+        /* アナーキー鯖専用のテーマカラー（赤系）を設定 */
+        :root { --primary: #ef4444; --bg: #050505; --card: #111; }
+        body { margin: 0; background-color: var(--bg); color: #e2e8f0; font-family: 'Segoe UI', sans-serif; }
+        
+        /* ナビゲーション */
+        nav { background: rgba(17, 17, 17, 0.9); padding: 1rem; border-bottom: 2px solid var(--primary); display: flex; justify-content: center; gap: 20px; position: sticky; top: 0; z-index: 100; backdrop-filter: blur(5px); }
+        nav a { color: var(--primary); text-decoration: none; font-weight: bold; transition: 0.3s; }
+        nav a:hover { color: white; }
+        
+        .container { max-width: 900px; margin: 0 auto; padding: 40px 20px; text-align: center; }
+        
+        /* タイトルと装飾 */
+        h1 { font-size: 3rem; color: var(--primary); margin-bottom: 10px; text-shadow: 0 0 10px rgba(239, 68, 68, 0.5); }
+        .subtitle { color: #94a3b8; font-size: 1.2rem; margin-bottom: 40px; }
+        
+        /* コンテンツセクション */
+        .section { background: var(--card); padding: 40px 30px; border-radius: 12px; border: 1px solid #333; margin-bottom: 40px; text-align: left; }
+        h2 { border-left: 4px solid var(--primary); padding-left: 15px; margin-top: 0; color: white; }
+        p { line-height: 1.8; color: #cbd5e1; font-size: 1.1rem; }
+        
+        /* 特徴リスト */
+        .feature-list { list-style: none; padding: 0; margin: 30px 0; }
+        .feature-list li { background: #1a1e26; margin-bottom: 10px; padding: 15px; border-radius: 8px; border-left: 3px solid var(--primary); }
+        .feature-list li strong { color: white; display: block; margin-bottom: 5px; font-size: 1.1rem; }
+        
+        .btn { display: inline-block; padding: 12px 24px; background: var(--primary); color: white; text-decoration: none; border-radius: 6px; font-weight: bold; margin-top: 20px; transition: 0.3s; }
+        .btn:hover { background: #dc2626; transform: translateY(-2px); }
+        .btn-back { background: #334155; }
+        .btn-back:hover { background: #475569; }
     </style>
 </head>
 <body>
 
+    <nav>
+        <a href="./index.html">Home</a>
+        <a href="./index.html#servers">サーバー紹介</a>
+        <a href="./index.html#recruit">運営募集</a>
+        <a href="./blog.html">Admin日記</a>
+    </nav>
+
     <div class="container">
-        <h1>💀 SutoServer - ANARCHY</h1>
-        <p><strong>「ルール無用。力こそが正義。」</strong></p>
-        <p>アナーキーサーバーへようこそ。ここには君を縛る法律も、守ってくれる運営も存在しない。あるのは圧倒的な自由と、隣り合わせの死だけだ。</p>
+        <h1>⚔️ アナーキー鯖</h1>
+        <div class="subtitle">秩序はない。信じられるのは己の力のみ。</div>
 
-        <h2>サーバーの特徴</h2>
-        <ul>
-            <li><strong>完全自由:</strong> 略奪、拠点破壊、トラップ設置、すべてが許可されています。</li>
-            <li><strong>ノンリセット:</strong> ワールドは原則としてリセットされません。君たちの破壊と建設の跡がそのまま歴史になります。</li>
-            <li><strong>無法地帯:</strong> 運営は介入しません。トラブルはすべて自分の力で解決してください。</li>
-        </ul>
+        <div class="section">
+            <h2>サバイバルの極限を体験せよ</h2>
+            <p>アナーキー鯖（Anarchy Server）は、一切のルールが存在しない過酷な世界です。運営による保護や介入はありません。建築物を破壊されるのも、アイテムを略奪されるのも日常茶飯事。プレイヤーの知恵と生存本能だけが試されます。</p>
 
-        <div class="warning-box">
-            <h2>生き残るためのヒント</h2>
-            <p>1. <strong>拠点は遠くへ:</strong> スポーン地点（初期位置）付近は非常に危険です。数万ブロック先まで移動することを推奨します。</p>
-            <p>2. <strong>誰も信じるな:</strong> チャットでの甘い言葉には裏があると思え。自分の身を守れるのは自分だけです。</p>
-            <p>3. <strong>隠しチェスト:</strong> 大切なアイテムは地下深く、あるいは岩盤付近に隠して、場所をメモしておきましょう。</p>
+            <ul class="feature-list">
+                <li>
+                    <strong>🔥 ルール無用</strong>
+                    荒らし、略奪、PvP、裏切り。すべてが許容される無法地帯です。
+                </li>
+                <li>
+                    <strong>🛡️ 自己防衛が絶対</strong>
+                    拠点を隠すか、難攻不落の要塞を築くか。生き残るための戦略を立てましょう。
+                </li>
+                <li>
+                    <strong>🤝 危険な同盟</strong>
+                    一人で生き抜くのは困難です。しかし、信じた仲間が明日も味方とは限りません。
+                </li>
+            </ul>
         </div>
 
-        <a href="index.html" class="back-link">← TOPページに戻る</a>
+        <a href="./index.html" class="btn btn-back">トップページに戻る</a>
     </div>
 
 </body>
