@@ -2,28 +2,75 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <title>国家鯖説明 | SutoServer</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>国家鯖 - SutoServer</title>
     <style>
-        body { background-color: #0a0a0a; color: white; font-family: sans-serif; line-height: 1.6; padding: 50px; }
-        .container { max-width: 800px; margin: 0 auto; border-left: 5px solid #4d94ff; padding-left: 20px; }
-        h1 { color: #4d94ff; border-bottom: 1px solid #333; }
-        .back-link { display: inline-block; margin-top: 30px; color: #00ffcc; text-decoration: none; }
+        /* 国家鯖専用のテーマカラー（ゴールド系）を設定 */
+        :root { --primary: #facc15; --bg: #050505; --card: #111; }
+        body { margin: 0; background-color: var(--bg); color: #e2e8f0; font-family: 'Segoe UI', sans-serif; }
+        
+        /* ナビゲーション */
+        nav { background: rgba(17, 17, 17, 0.9); padding: 1rem; border-bottom: 2px solid var(--primary); display: flex; justify-content: center; gap: 20px; position: sticky; top: 0; z-index: 100; backdrop-filter: blur(5px); }
+        nav a { color: var(--primary); text-decoration: none; font-weight: bold; transition: 0.3s; }
+        nav a:hover { color: white; }
+        
+        .container { max-width: 900px; margin: 0 auto; padding: 40px 20px; text-align: center; }
+        
+        /* タイトルと装飾 */
+        h1 { font-size: 3rem; color: var(--primary); margin-bottom: 10px; text-shadow: 0 0 10px rgba(250, 204, 21, 0.5); }
+        .subtitle { color: #94a3b8; font-size: 1.2rem; margin-bottom: 40px; }
+        
+        /* コンテンツセクション */
+        .section { background: var(--card); padding: 40px 30px; border-radius: 12px; border: 1px solid #333; margin-bottom: 40px; text-align: left; }
+        h2 { border-left: 4px solid var(--primary); padding-left: 15px; margin-top: 0; color: white; }
+        p { line-height: 1.8; color: #cbd5e1; font-size: 1.1rem; }
+        
+        /* 特徴リスト */
+        .feature-list { list-style: none; padding: 0; margin: 30px 0; }
+        .feature-list li { background: #1a1e26; margin-bottom: 10px; padding: 15px; border-radius: 8px; border-left: 3px solid var(--primary); }
+        .feature-list li strong { color: white; display: block; margin-bottom: 5px; font-size: 1.1rem; }
+        
+        .btn { display: inline-block; padding: 12px 24px; background: var(--primary); color: #050505; text-decoration: none; border-radius: 6px; font-weight: bold; margin-top: 20px; transition: 0.3s; }
+        .btn:hover { background: #eab308; transform: translateY(-2px); }
+        .btn-back { background: #334155; color: white; }
+        .btn-back:hover { background: #475569; color: white; }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>🏛️ SutoServer - NATIONS (国家鯖)</h1>
-        <p><strong>「法を敷き、領土を広げ、文明を築け。」</strong></p>
-        <p>国家サーバーは、プレイヤー同士が協力して国を作り、外交や戦争を通じて発展を目指すシミュレーションサーバーです。</p>
-        
-        <h2>🌍 システム紹介</h2>
-        <ul>
-            <li><strong>建国システム:</strong> 自分の国を建国し、領土を保護することができます。</li>
-            <li><strong>経済システム:</strong> 貿易や職業を通じて通貨を稼ぎ、国の施設をアップグレードしましょう。</li>
-            <li><strong>戦争と外交:</strong> 他国と同盟を結ぶか、宣戦布告するか。高度な政治判断が求められます。</li>
-        </ul>
 
-        <a href="index.html" class="back-link">← TOPページに戻る</a>
+    <nav>
+        <a href="./index.html">Home</a>
+        <a href="./index.html#servers">サーバー紹介</a>
+        <a href="./index.html#recruit">運営募集</a>
+        <a href="./blog.html">Admin日記</a>
+    </nav>
+
+    <div class="container">
+        <h1>👑 国家鯖</h1>
+        <div class="subtitle">己の国を築き、歴史に名を刻め。</div>
+
+        <div class="section">
+            <h2>建国・外交・戦争の壮大な世界</h2>
+            <p>国家鯖（Nation Server）は、プレイヤー自身が国を作り、発展させていくサーバーです。仲間を集めて強大な帝国を築くもよし、経済力で他国を圧倒するもよし。サーバーの歴史を作るのはあなた自身です。</p>
+
+            <ul class="feature-list">
+                <li>
+                    <strong>🏛️ 建国と統治</strong>
+                    土地を保護し、独自の法律やルールを持つ国家を設立できます。国民を増やして国力を高めましょう。
+                </li>
+                <li>
+                    <strong>💰 経済と交易</strong>
+                    他国と物資の取引を行い、独自の経済圏を作り上げることができます。商売で富を築くのも立派な戦略です。
+                </li>
+                <li>
+                    <strong>⚔️ 外交と戦争</strong>
+                    他国と同盟を結んで平和を維持するか、それとも武力で領土を拡大するか。緊迫した外交の駆け引きが楽しめます。
+                </li>
+            </ul>
+        </div>
+
+        <a href="./index.html" class="btn btn-back">トップページに戻る</a>
     </div>
+
 </body>
 </html>
