@@ -13,57 +13,93 @@
         nav a { color: var(--primary); text-decoration: none; font-weight: bold; transition: 0.3s; }
         nav a:hover { color: white; }
         
-        .container { max-width: 900px; margin: 0 auto; padding: 40px 20px; }
-        h1 { font-size: 3rem; text-align: center; background: linear-gradient(90deg, #38bdf8, #818cf8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        /* ヒーローヘッダー（写真ドーン！のエリア） */
+        .hero {
+            height: 75vh; /* 画面の75%の高さ */
+            /* ▼▼▼ ここに背景画像のファイル名を設定します ▼▼▼ */
+            background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(5, 5, 5, 1)), url('./bg.png');
+            /* ▲▲▲ -------------------------------------- ▲▲▲ */
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed; /* これが背景を固定する魔法のコード */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            border-bottom: 2px solid var(--primary);
+        }
+
+        .hero-content { text-align: center; animation: fadeIn 2s ease-in-out; }
+        .hero h1 { font-size: 4.5rem; margin: 0; background: linear-gradient(90deg, #38bdf8, #818cf8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-shadow: 0 4px 10px rgba(0,0,0,0.5); }
+        .hero .subtitle { font-size: 1.2rem; color: #94a3b8; font-weight: bold; margin-bottom: 20px; }
+        
+        /* IPボックス */
+        .hero .ip-box { background: rgba(30, 41, 59, 0.6); backdrop-filter: blur(8px); padding: 20px 40px; border-radius: 8px; font-family: monospace; border-top: 4px solid var(--primary); font-size: 1.1rem; box-shadow: 0 10px 20px rgba(0,0,0,0.5); }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* コンテンツエリア全体 */
+        .container { max-width: 900px; margin: 0 auto; padding: 40px 20px; position: relative; z-index: 10; background-color: var(--bg); }
         .section { background: var(--card); padding: 30px; border-radius: 12px; margin-bottom: 40px; border: 1px solid #333; }
         h2 { border-left: 4px solid var(--primary); padding-left: 15px; margin-top: 0; }
         
-        /* IPボックス */
-        .ip-box { background: #1e293b; padding: 20px; border-radius: 8px; text-align: center; font-family: monospace; border-left: 4px solid var(--primary); margin-bottom: 30px; }
-        
-        /* 募集・運営カード */
+        /* カード群 */
         .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin: 20px 0; }
         .card { background: #1a1e26; padding: 20px; border-radius: 10px; border: 1px solid #334155; text-align: center; }
-        .btn { display: inline-block; padding: 10px 20px; background: var(--primary); color: #050505; text-decoration: none; border-radius: 6px; font-weight: bold; margin-top: 10px; }
-        .status-closed { color: #94a3b8; background: #334155; padding: 8px; border-radius: 5px; display: block; margin-top: 10px; }
-        .notice { border: 1px dashed #f59e0b; color: #fbbf24; padding: 15px; border-radius: 8px; background: #1a1506; text-align: center; }
+        .card h3 { margin-top: 0; }
+        .btn { display: inline-block; padding: 10px 20px; background: var(--primary); color: #050505; text-decoration: none; border-radius: 6px; font-weight: bold; margin-top: 10px; transition: 0.3s; }
+        .btn:hover { filter: brightness(1.2); }
+        .status-closed { color: #94a3b8; background: #334155; padding: 8px; border-radius: 5px; display: block; margin-top: 10px; font-weight: bold; }
+        .notice { border: 1px dashed #f59e0b; color: #fbbf24; padding: 15px; border-radius: 8px; background: #1a1506; text-align: center; margin-top: 20px; font-weight: bold; }
     </style>
 </head>
 <body>
 
     <nav>
         <a href="#home">Home</a>
+        <a href="#servers">サーバー紹介</a>
         <a href="#recruit">運営募集</a>
         <a href="./blog.html">Admin日記</a>
         <a href="#staff">運営紹介</a>
     </nav>
 
-    <div class="container" id="home">
-        <h1>SutoServer Portal</h1>
-        <div class="ip-box">
-            Java: <b>sutoserver.net</b><br>
-            統合版: <b>sutoserver.net</b> (Port: 19312)
+    <!-- 写真ドーン！のエリア -->
+    <header class="hero" id="home">
+        <div class="hero-content">
+            <h1>SutoServer</h1>
+            <p class="subtitle">3つの世界が交差する場所</p>
+            
+            <div class="ip-box">
+                Java: <b>sutoserver.net</b><br>
+                統合版: <b>sutoserver.net</b> (Port: 19312)
+            </div>
         </div>
+    </header>
 
-                <section id="servers" class="section">
+    <!-- ここから下はスクロールで写真の上に被さってきます -->
+    <div class="container">
+        
+        <section id="servers" class="section">
             <h2>🌍 サーバー紹介</h2>
             <p>SutoServerには、全く異なるプレイスタイルを楽しめる世界が用意されています。</p>
             <div class="grid">
                 <div class="card" style="border-top: 4px solid #facc15;">
-                    <h3>👑 国家鯖</h3>
+                    <h3 style="color: #facc15;">👑 国家鯖</h3>
                     <p>建国、外交、そして戦争。仲間と共に自分だけの国家を作り上げ、歴史に名を刻もう。</p>
-                    <a href="./kokka.html" class="btn">紹介を見る</a>
+                    <a href="./nation.html" class="btn" style="background: #facc15;">紹介を見る</a>
                 </div>
-
                 <div class="card" style="border-top: 4px solid #ef4444;">
-                    <h3>⚔️ アナーキー鯖</h3>
+                    <h3 style="color: #ef4444;">⚔️ アナーキー鯖</h3>
                     <p>ルール無用。略奪、裏切り、破壊が日常の無法地帯で、君は生き残れるか。</p>
                     <a href="./anarchy.html" class="btn" style="background: #ef4444; color: white;">紹介を見る</a>
                 </div>
             </div>
         </section>
-　　　　　
-　　　　　　　　　　　<section id="recruit" class="section">
+
+        <section id="recruit" class="section">
             <h2>🛠️ 運営募集</h2>
             <div class="grid">
                 <div class="card">
@@ -92,14 +128,7 @@
             </div>
         </section>
 
-        <section id="status" class="section">
-            <h2>📝 サーバー状況</h2>
-            <p>現在のサーバー稼働状況は以下からリアルタイムで確認できます。</p>
-            <a href="https://status.sutoserver.com" class="btn" style="background:#4ade80;">サーバー稼働状況を確認</a>
-            <a href="./blog.html" class="btn" style="background:#818cf8; margin-left: 10px;">Admin日記を見に行く</a>
-        </section>
-
-                <section id="staff" class="section">
+        <section id="staff" class="section">
             <h2>👥 運営紹介</h2>
             <div class="grid">
                 <div class="card" style="border-top: 3px solid #ef4444;">
@@ -107,31 +136,26 @@
                     <p style="color: #ef4444; font-weight: bold; margin-bottom: 5px;">Owner</p>
                     <p>Admin / Developer / SNS / Moderator</p>
                 </div>
-                
                 <div class="card" style="border-top: 3px solid #38bdf8;">
                     <h3>じおん</h3>
                     <p style="color: #38bdf8; font-weight: bold; margin-bottom: 5px;">鯖主</p>
-                    <p>Admin / Developer / Builder / Moderator / SNS </p>
+                    <p>Admin / Developer / Builder / Moderator</p>
                 </div>
-                
                 <div class="card">
                     <h3>人外代表人間さん</h3>
                     <p>Admin / Developer</p>
                 </div>
-                
                 <div class="card">
                     <h3>ぬっこ</h3>
                     <p>Developer / SNS / Builder / Moderator</p>
                 </div>
-                
                 <div class="card">
                     <h3>べーこん</h3>
                     <p>Developer / SNS / Builder / Moderator</p>
                 </div>
-                
                 <div class="card">
                     <h3>きなこ</h3>
-                    <p>Developer</p>
+                    <p>Developer / SNS</p>
                 </div>
             </div>
         </section>
