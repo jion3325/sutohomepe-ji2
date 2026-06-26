@@ -26,6 +26,9 @@
             justify-content: center;
             flex-direction: column;
             border-bottom: 2px solid var(--primary);
+            animation: imageShuwan 2s ease-out;
+        }
+
         }
 
         .hero-content {
@@ -33,9 +36,18 @@
             animation: fadeIn 2s ease-in-out;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+                /* ▼▼ 最高の「しゅわん」エフェクト ▼▼ */
+        @keyframes imageShuwan {
+            from { 
+                opacity: 0; 
+                transform: scale(1.05); /* 少しズームした状態からスタート */
+            }
+            to { 
+                opacity: 1; 
+                transform: scale(1);    /* 元のサイズに着地 */
+            }
+        }
+
         }
         
         /* コンテンツエリア全体 */
