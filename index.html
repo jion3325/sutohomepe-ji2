@@ -13,15 +13,14 @@
         nav a { color: var(--primary); text-decoration: none; font-weight: bold; transition: 0.3s; }
         nav a:hover { color: white; }
         
-        /* ヒーローヘッダー（写真ドーン！のエリア） */
+        /* ヒーローヘッダー（写真ドーン！のエリア：スマホバグ対策の安全版） */
         .hero {
-            height: 75vh; /* 画面の75%の高さ */
-            /* ▼▼▼ ここに背景画像のファイル名を設定します ▼▼▼ */
-            background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(5, 5, 5, 1)), url('/bg.PNG');
-            /* ▲▲▲ -------------------------------------- ▲▲▲ */
+            height: 80vh; /* 画像を大きく見せるために少し広げました */
+            /* グラデーションを薄くして、画像の黄色い文字を読みやすくしています */
+            background-image: linear-gradient(rgba(0, 0, 0, 0.1), rgba(10, 10, 10, 0.6)), url('./bg.png');
             background-size: cover;
             background-position: center;
-            background-attachment: fixed; /* これが背景を固定する魔法のコード */
+            /* fixedを削除し、真っ黒になるバグを解消しました */
             display: flex;
             align-items: center;
             justify-content: center;
@@ -29,12 +28,10 @@
             border-bottom: 2px solid var(--primary);
         }
 
-        .hero-content { text-align: center; animation: fadeIn 2s ease-in-out; }
-        .hero h1 { font-size: 4.5rem; margin: 0; background: linear-gradient(90deg, #38bdf8, #818cf8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-shadow: 0 4px 10px rgba(0,0,0,0.5); }
-        .hero .subtitle { font-size: 1.2rem; color: #94a3b8; font-weight: bold; margin-bottom: 20px; }
-        
-        /* IPボックス */
-        .hero .ip-box { background: rgba(30, 41, 59, 0.6); backdrop-filter: blur(8px); padding: 20px 40px; border-radius: 8px; font-family: monospace; border-top: 4px solid var(--primary); font-size: 1.1rem; box-shadow: 0 10px 20px rgba(0,0,0,0.5); }
+        .hero-content {
+            text-align: center;
+            animation: fadeIn 2s ease-in-out;
+        }
 
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(20px); }
@@ -66,20 +63,11 @@
         <a href="#staff">運営紹介</a>
     </nav>
 
-    <!-- 写真ドーン！のエリア -->
     <header class="hero" id="home">
         <div class="hero-content">
-            <h1>SutoServer</h1>
-            <p class="subtitle">3つの世界が交差する場所</p>
-            
-            <div class="ip-box">
-                Java: <b>sutoserver.net</b><br>
-                統合版: <b>sutoserver.net</b> (Port: 19312)
-            </div>
         </div>
     </header>
 
-    <!-- ここから下はスクロールで写真の上に被さってきます -->
     <div class="container">
         
         <section id="servers" class="section">
@@ -155,7 +143,7 @@
                 </div>
                 <div class="card">
                     <h3>きなこ</h3>
-                    <p>Developer / SNS</p>
+                    <p>Developer</p>
                 </div>
             </div>
         </section>
