@@ -9,18 +9,16 @@
         body { margin: 0; background-color: var(--bg); color: #e2e8f0; font-family: 'Segoe UI', sans-serif; scroll-behavior: smooth; }
         
         /* ナビゲーション */
-        nav { background: rgba(17, 17, 17, 0.9); padding: 1rem; border-bottom: 2px solid var(--primary); display: flex; justify-content: center; gap: 20px; position: sticky; top: 0; z-index: 100; backdrop-filter: blur(5px); }
+        nav { background: rgba(17, 17, 17, 0.9); padding: 1rem; border-bottom: 2px solid var(--primary); display: flex; justify-content: center; gap: 20px; position: sticky; top: 0; z-index: 100; backdrop-filter: blur(5px); flex-wrap: wrap; }
         nav a { color: var(--primary); text-decoration: none; font-weight: bold; transition: 0.3s; }
         nav a:hover { color: white; }
         
-        /* ヒーローヘッダー（写真ドーン！のエリア：スマホバグ対策の安全版） */
+        /* ヒーローヘッダー */
         .hero {
-            height: 80vh; /* 画像を大きく見せるために少し広げました */
-            /* グラデーションを薄くして、画像の黄色い文字を読みやすくしています */
+            height: 80vh;
             background-image: linear-gradient(rgba(0, 0, 0, 0.1), rgba(10, 10, 10, 0.6)), url('2026-07-20_13.30.39.png');
             background-size: cover;
             background-position: center;
-            /* fixedを削除し、真っ黒になるバグを解消しました */
             display: flex;
             align-items: center;
             justify-content: center;
@@ -29,25 +27,21 @@
             animation: imageShuwan 2s ease-out;
         }
 
-        }
-
         .hero-content {
             text-align: center;
             animation: fadeIn 2s ease-in-out;
         }
 
-                /* ▼▼ 最高の「しゅわん」エフェクト ▼▼ */
+        /* ▼▼ 「しゅわん」エフェクト ▼▼ */
         @keyframes imageShuwan {
             from { 
                 opacity: 0; 
-                transform: scale(1.05); /* 少しズームした状態からスタート */
+                transform: scale(1.05);
             }
             to { 
                 opacity: 1; 
-                transform: scale(1);    /* 元のサイズに着地 */
+                transform: scale(1);
             }
-        }
-
         }
         
         /* コンテンツエリア全体 */
@@ -69,6 +63,8 @@
 
     <nav>
         <a href="#home">Home</a>
+        <a href="https://status.sutoserver.com" target="_blank" rel="noopener">ステータス</a>
+        <a href="https://rule.sutoserver.com" target="_blank" rel="noopener">ルール</a>
         <a href="#servers">サーバー紹介</a>
         <a href="#recruit">運営募集</a>
         <a href="./blog.html">Admin日記</a>
@@ -81,7 +77,25 @@
     </header>
 
     <div class="container">
-        
+
+        <!-- 🟢 案内・インフォメーション -->
+        <section id="info" class="section">
+            <h2>📢 インフォメーション</h2>
+            <p>サーバー利用前に、最新の稼働状況および利用規約をご確認ください。</p>
+            <div class="grid">
+                <div class="card" style="border-top: 4px solid #22c55e;">
+                    <h3 style="color: #22c55e;">📊 サーバーステータス</h3>
+                    <p>各サーバーのオンライン状況、IPアドレス、接続情報を確認できます。</p>
+                    <a href="https://status.sutoserver.com" class="btn" style="background: #22c55e; color: black;" target="_blank" rel="noopener">ステータスを見る</a>
+                </div>
+                <div class="card" style="border-top: 4px solid #38bdf8;">
+                    <h3 style="color: #38bdf8;">📜 サーバールール</h3>
+                    <p>快適にプレイしていただくための禁止事項・利用規約を掲載しています。</p>
+                    <a href="https://rule.sutoserver.com" class="btn" target="_blank" rel="noopener">ルールを見る</a>
+                </div>
+            </div>
+        </section>
+
         <section id="servers" class="section">
             <h2>🌍 サーバー紹介</h2>
             <p>SutoServerには、全く異なるプレイスタイルを楽しめる世界が用意されています。</p>
