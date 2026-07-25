@@ -9,7 +9,7 @@
         body { margin: 0; background-color: var(--bg); color: #e2e8f0; font-family: 'Segoe UI', sans-serif; scroll-behavior: smooth; }
         
         /* ナビゲーション */
-        nav { background: rgba(17, 17, 17, 0.9); padding: 1rem; border-bottom: 2px solid var(--primary); display: flex; justify-content: center; gap: 20px; position: sticky; top: 0; z-index: 100; backdrop-filter: blur(5px); flex-wrap: wrap; }
+        nav { background: rgba(17, 17, 17, 0.9); padding: 1rem; border-bottom: 2px solid var(--primary); display: flex; justify-content: center; gap: 20px; position: sticky; top: 0; z-index: 100; flex-wrap: wrap; }
         nav a { color: var(--primary); text-decoration: none; font-weight: bold; transition: 0.3s; }
         nav a:hover { color: white; }
         
@@ -169,6 +169,35 @@
                 </div>
             </div>
         </section>
+
+        <!-- 📺 公式SNS・メディア -->
+        <section id="media" class="section">
+            <h2>📺 公式SNS・メディア</h2>
+            <p>SutoServerの最新情報はこちらで発信しています。</p>
+            <div class="grid">
+                <div class="card" style="border-top: 4px solid #ff0000;">
+                    <h3 style="color: #ff0000;">🎬 YouTube</h3>
+                    <p>動画でサーバーの魅力を紹介</p>
+                    <a href="https://youtube.com/@user-sutoserver?si=i4k1wOXAyu-VunB3" class="btn" style="background: #ff0000; color: white;" target="_blank" rel="noopener">チャンネルを見る</a>
+                </div>
+                <div class="card" style="border-top: 4px solid #000000;">
+                    <h3 style="color: #ffffff;">𝕏 (Twitter)</h3>
+                    <p>リアルタイム情報・イベント告知</p>
+                    <a href="https://x.com/sutosaba?s=11" class="btn" style="background: #000000; color: white;" target="_blank" rel="noopener">フォローする</a>
+                </div>
+                <div class="card" style="border-top: 4px solid #9146ff;">
+                    <h3 style="color: #9146ff;">🎮 Karotter</h3>
+                    <p>ゲーム配信・コミュニティ</p>
+                    <a href="https://karotter.com/profile/sutoserver/share" class="btn" style="background: #9146ff; color: white;" target="_blank" rel="noopener">プロフィールを見る</a>
+                </div>
+                <div class="card" style="border-top: 4px solid #5865f2;">
+                    <h3 style="color: #5865f2;">💬 Discord</h3>
+                    <p>コミュニティ・リアルタイムチャット</p>
+                    <a href="https://discord.gg/rmYPBFNb6" class="btn" style="background: #5865f2; color: white;" target="_blank" rel="noopener">サーバーに参加</a>
+                </div>
+            </div>
+        </section>
+
     </div>
 
 </body>
